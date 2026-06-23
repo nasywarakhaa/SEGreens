@@ -1,0 +1,347 @@
+{
+  "info": {
+    "_postman_id": "10111276-421d-4d14-b60c-089f38b170ee",
+    "name": "SEGreens Mobile API (Active Endpoints)",
+    "description": "Collection untuk endpoint yang saat ini aktif/tampil di Swagger. Sudah include X-API-KEY dan token flow (login/register/refresh).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register (Mobile)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let data = null;",
+                  "try { data = pm.response.json(); } catch (e) {}",
+                  "if (data && data.data && data.data.token) {",
+                  "  pm.collectionVariables.set('access_token', data.data.token.access || '');",
+                  "  pm.collectionVariables.set('refresh_token', data.data.token.refresh || '');",
+                  "}",
+                  "if (data && data.data && data.data.user && data.data.user.email) {",
+                  "  pm.collectionVariables.set('identifier', data.data.user.email);",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"{{test_full_name}}\",\n  \"email\": \"{{test_email}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/api/register",
+            "description": "Auto-save access_token + refresh_token + identifier dari response."
+          },
+          "response": []
+        },
+        {
+          "name": "Login (Mobile)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let data = null;",
+                  "try { data = pm.response.json(); } catch (e) {}",
+                  "if (data && data.data && data.data.token) {",
+                  "  pm.collectionVariables.set('access_token', data.data.token.access || '');",
+                  "  pm.collectionVariables.set('refresh_token', data.data.token.refresh || '');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"{{identifier}}\",\n  \"password\": \"{{password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/api/login",
+            "description": "identifier bisa email / username / phone_number."
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh token (Mobile)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let data = null;",
+                  "try { data = pm.response.json(); } catch (e) {}",
+                  "if (data && data.data && data.data.token) {",
+                  "  pm.collectionVariables.set('access_token', data.data.token.access || '');",
+                  "  pm.collectionVariables.set('refresh_token', data.data.token.refresh || '');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{api_key}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh\": \"{{refresh_token}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/api/token/refresh"
+          },
+          "response": []
+        },
+        {
+          "name": "Logout (Mobile)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "  pm.collectionVariables.set('access_token', '');",
+                  "  pm.collectionVariables.set('refresh_token', '');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/logout"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Profile",
+      "item": [
+        {
+          "name": "Get profile (Mobile)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": "{{base_url}}/api/me"
+          },
+          "response": []
+        },
+        {
+          "name": "Update profile (Mobile)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"full_name\": \"{{update_full_name}}\",\n  \"phone_number\": \"{{update_phone_number}}\",\n  \"username\": \"{{update_username}}\",\n  \"avatar\": \"{{update_avatar_url}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": "{{base_url}}/api/me",
+            "description": "Untuk avatar via URL/path string."
+          },
+          "response": []
+        },
+        {
+          "name": "Upload avatar (Mobile)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "X-API-KEY",
+                "value": "{{api_key}}"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "src": "{{avatar_file}}",
+                  "description": "Set variable avatar_file ke path lokal image file."
+                }
+              ]
+            },
+            "url": "{{base_url}}/api/me/avatar"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://129.212.226.135:8080"
+    },
+    {
+      "key": "api_key",
+      "value": "9e83df7b817386d6396a6dbfcdba8350543fe8203fd7ebcc95d39f0c26d60209"
+    },
+    {
+      "key": "identifier",
+      "value": "user@example.com"
+    },
+    {
+      "key": "password",
+      "value": "Password123!"
+    },
+    {
+      "key": "test_full_name",
+      "value": "Mobile Tester"
+    },
+    {
+      "key": "test_email",
+      "value": "mobile.{{$timestamp}}@example.com"
+    },
+    {
+      "key": "update_full_name",
+      "value": "Mobile Tester Updated"
+    },
+    {
+      "key": "update_phone_number",
+      "value": "+6281234567890"
+    },
+    {
+      "key": "update_username",
+      "value": "mobile.user.updated"
+    },
+    {
+      "key": "update_avatar_url",
+      "value": "https://example.com/avatar.png"
+    },
+    {
+      "key": "avatar_file",
+      "value": "/absolute/path/to/avatar.png"
+    },
+    {
+      "key": "access_token",
+      "value": ""
+    },
+    {
+      "key": "refresh_token",
+      "value": ""
+    }
+  ]
+}
