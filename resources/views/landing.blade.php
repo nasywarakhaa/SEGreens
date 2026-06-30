@@ -10,9 +10,9 @@
     $galleryItems = __('landing.gallery.items');
 
     $appScreens = [
-        'https://res.cloudinary.com/dceskn69f/image/upload/v1774672678/home_t6csyk.png',
-        'https://res.cloudinary.com/dceskn69f/image/upload/v1774672129/product_ipjj0t.png',
-        'https://res.cloudinary.com/dceskn69f/image/upload/v1774672137/order_p8nq3n.png',
+        'https://res.cloudinary.com/ii8qzx20/image/upload/v1782828986/landingpage.png',
+        'https://res.cloudinary.com/ii8qzx20/image/upload/v1782828986/produk.png',
+        'https://res.cloudinary.com/ii8qzx20/image/upload/v1782828985/checkout.png',
     ];
 
     $previewItems = __('landing.preview.items');
